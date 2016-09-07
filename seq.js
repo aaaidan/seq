@@ -116,20 +116,31 @@ Sequence.prototype.onCurrentTickChanged = function(currentTick) {
 
 function Instrument(context) {
 	this.a = context;
-	this.synth = this.a.createOscillator()
-	this.synth.type = 'sawtooth';
+	this.synths = [];
+
+	this.synths.push(this.a.createOscillator());
+	this.synths.push(this.a.createOscillator());
+	this.synths.push(this.a.createOscillator());
+
+	this.synths.forEach((synth,i) => { 
+		synth.type = 'sawtooth';
+		synth.detune.value = (i-1)*(1+Math.random()*0.01);
+	});
 
 	this.filter = this.a.createBiquadFilter();
 	this.filter.type = "lowpass";
 	this.filter.Q.value = 1;
 	this.filter.frequency.value = 44100;
-	this.synth.connect(this.filter);
-
+	this.synths.forEach(synth => { 
+		synth.connect(this.filter);
+	});
 	this.out = this.a.createGain();
 	this.filter.connect(this.out);
 	
 	this.out.gain.value = 0;
-	this.synth.start();
+	this.synths.forEach(synth => { 
+		synth.start();
+	});
 
 	this.filterStart = 6000;
 	this.filterEnd = 50;
@@ -138,7 +149,9 @@ function Instrument(context) {
 Instrument.prototype.note = function(pitch, time) {
 	// console.log("Noting", pitch, time);
 
-	this.synth.frequency.setTargetAtTime(Note.pitchToFreq(pitch), time, 0.005);
+	this.synths.forEach(synth => { 
+		synth.frequency.setTargetAtTime(freq, time, 0.005);
+	});
 
 	this.filter.frequency.setTargetAtTime(this.filterStart, time,         0.0005);
 	this.filter.frequency.setTargetAtTime(this.filterEnd,   time + 0.02, this.filterSpeed);
