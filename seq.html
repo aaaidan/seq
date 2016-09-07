@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Seq</title>
+	<link rel="stylesheet" href="seq.css" />
+</head>
+
+<body>
+
+<div class="transport">
+	<div class="play" data-bind="css:{on:playing}, click:playClicked">&#9654;</div>
+</div>
+
+<div class="sequence" data-bind="with: sequence">
+<!-- ko foreach: ticks -->
+	<div class="tick" data-bind="css:{'tick-current':current}">
+	<!-- ko foreach: notes -->
+		<div class="note" data-bind="css:{'note-on':on}, click:onClick"></div>
+	<!-- /ko -->
+	</div>
+<!-- /ko -->
+</div>
+
+<canvas data-bind="analyser: { audioContext: a, target: out } " />
+
+<script src="knockout.js"></script>
+<script src="seq.js"></script>
+<script src="seq-test.js"></script>
+</body>
+</html>

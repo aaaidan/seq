@@ -1,0 +1,68 @@
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+.sequence {
+	display: flex;
+	flex-direction: row;
+}
+
+.tick {
+	display: flex;
+	flex-direction: column;
+}
+.tick-current {
+	background: rgba(255,0,0,0.1);
+}
+
+.note {
+	margin: 2px;
+
+	width: 44px;
+	height: 44px;
+	border: 1px solid red;
+	border-radius: 3px;
+	cursor:pointer;
+}
+.note:hover {
+	border-width: 2px;
+}
+.note.note-on {
+	background: red;
+}
+.note.note-on:hover {
+	outline: 1px solid white;
+	outline-offset: -3px;
+}
+
+.transport {
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+
+.play {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	margin: 2px;
+
+	width: 44px;
+	height: 44px;
+	color: red;
+	border: 1px solid red;
+	border-radius: 3px;
+	cursor:pointer;
+}
+.play:hover {
+	border-width: 2px;
+}
+.play.on {
+	background: red;
+	color: white;
+}
+.play.on:hover {
+	outline: 1px solid white;
+	outline-offset: -3px;
+}
