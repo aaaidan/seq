@@ -124,7 +124,7 @@ function Instrument(context) {
 
 	this.synths.forEach((synth,i) => { 
 		synth.type = 'sawtooth';
-		synth.detune.value = (i-1)*(1+Math.random()*0.01);
+		synth.detune.value = (i-1)*(10+Math.random()*0.01);
 	});
 
 	this.filter = this.a.createBiquadFilter();
