@@ -145,15 +145,17 @@ function Instrument(context) {
 	this.filterStart = 6000;
 	this.filterEnd = 50;
 	this.filterSpeed = 0.082;
+
+	this.transpose = 0;
 }
 Instrument.prototype.note = function(pitch, time) {
-	// console.log("Noting", pitch, time);
+	const freq = Note.pitchToFreq(pitch + this.transpose);
 
 	this.synths.forEach(synth => { 
 		synth.frequency.setTargetAtTime(freq, time, 0.005);
 	});
 
-	this.filter.frequency.setTargetAtTime(this.filterStart, time,         0.0005);
+	this.filter.frequency.setTargetAtTime(this.filterStart, time,        0.0005);
 	this.filter.frequency.setTargetAtTime(this.filterEnd,   time + 0.02, this.filterSpeed);
 
 	this.out.gain.setTargetAtTime(1.0, time,         0.002);
